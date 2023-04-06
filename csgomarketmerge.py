@@ -39,6 +39,7 @@ def highlightGame(merged_data, worksheet):
 
     orange_fill = PatternFill(start_color="FFF5CC", end_color="FFF5CC", fill_type="solid")
     blue_fill = PatternFill(start_color="CCDAFF", end_color="CCDAFF", fill_type="solid")
+    grey_fill = PatternFill(start_color="ADADAD", end_color="ADADAD", fill_type="solid")
 
     col_idx = merged_data.columns.get_loc('Game Name') + 1
     for row in range(2, len(merged_data) + 2):
@@ -47,6 +48,8 @@ def highlightGame(merged_data, worksheet):
             worksheet.cell(row=row, column=col_idx).fill = orange_fill
         elif cell_value == 'CSGO':
             worksheet.cell(row=row, column=col_idx).fill = blue_fill
+        elif 'Trading Card' in cell_value:
+            worksheet.cell(row=row, column=col_idx).fill = grey_fill
 
 
 def highlightSheet(output_file_name, merged_data):
@@ -130,7 +133,7 @@ def combineBulk(data):
 
 def createOutputSheet(merged_data):
     # Save the resulting data to a new Excel file
-    output_file_name = 'output_data_csgo_t4.xlsx'
+    output_file_name = 'output_data_csgo_default.xlsx'
     writer = pd.ExcelWriter(output_file_name, engine='openpyxl')
     merged_data.to_excel(writer, index=False, sheet_name='output1')
     writer.save()
@@ -155,7 +158,7 @@ def main():
 
     # createOutputSheet(merged_data)
     # highlightPrice("output_data_csgo_colour_2.xlsx", merged_data)
-    highlightSheet("output_data_csgo_all_2.xlsx", merged_data)
+    highlightSheet("output_data_csgo_all_highlighted.xlsx", merged_data)
 
 
 
